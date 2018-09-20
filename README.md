@@ -10,7 +10,7 @@ A **Dockerfile** is included in the top level of this project to automatically b
 First, build the `builder` docker container:
 
 ```
-docker build -t sabjorn/cpp-project-template_builder ./docker/builder/
+docker build -t sabjorn/cpp-project-template_builder -f Dockerfile.builder .
 ```
 
 This will be used as part of a [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build) process (saving image size) AND can also be used as a development container.
