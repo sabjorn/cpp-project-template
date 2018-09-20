@@ -7,12 +7,13 @@ COPY ./ ./app
 
 # Build Project
 ARG BUILDFLAG="-j4"
+ARG TEST=true
 RUN set -x \
     && mkdir -p /app/build \
     && cd /app/build \
     && cmake .. \
-    && mkdir /poop \
-    && make $BUILDFLAG
+    && make $BUILDFLAG \
+    && if [ "$TEST" = true ]; then make test; fi
 
 # TODO: Run Tests
 
