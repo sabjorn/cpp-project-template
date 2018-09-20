@@ -1,35 +1,23 @@
-FROM debian:stretch-slim
-MAINTAINER Steven A. Bjornson <info@sabjorn.net>
+# Multi-Stage build, uses build tools from ./docker/builder/Dockerfile
+FROM sabjorn/cpp-project-template_builder as builder
 
-# Add GTests
-RUN buildDeps='git ca-certificates' \
-    && set -x \
-    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 https://github.com/google/googletest \
-    && cd ./googletest/googletest \
-    && cp -r ./include/gtest /usr/local/include \
-    && apt-get purge -y --auto-remove $buildDeps
-
-# Build Project
+# Copy project files in
 RUN mkdir app
 COPY ./ ./app
 
-# Build Projet
+# Build Project
 ARG BUILDFLAG="-j4"
-RUN buildDeps='make build-essential' \
-    && set -x \
-    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
+RUN set -x \
     && mkdir -p /app/build \
     && cd /app/build \
     && cmake .. \
-    && make $BUILDFLAG \
-    && apt-get purge -y --auto-remove $buildDeps
+    && mkdir /poop \
+    && make $BUILDFLAG
 
-RUN runDeps='make' \
-    && set -x \
-    && apt-get update && apt-get install -y $runDeps --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+# TODO: Run Tests
 
-WORKDIR /app
+# Our actual application 
+FROM debian:stretch-slim
+MAINTAINER Steven A. Bjornson <info@sabjorn.net>
+COPY --from=builder /app/build/app /usr/local/bin/
+ENTRYPOINT ["app"]
