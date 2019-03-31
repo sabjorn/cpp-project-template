@@ -3,27 +3,38 @@
 This is a small project to be used as the base for C++ projects. The goal is to have a useful tool for quickly and easily starting a C++ project.
 
 ## Docker
-### "Microservice"
 A **Dockerfile** is included in the top level of this project to automatically build and run the C++ application.
 
-#### Build
-First, build the `builder` docker container:
+This project uses a `Makefile` to automate the build/test/run stages.
 
-```
-docker build -t sabjorn/cpp-project-template_builder -f Dockerfile.builder .
-```
+### Make
+All `make` commands should be run from the top level of the project.
 
-This will be used as part of a [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build) process (saving image size) AND can also be used as a development container.
+A help message will appear by running:
 
-Next, build the application docker iamge:
-
-```
-docker build -t sabjorn/cpp-project-template_app .
+```bash
+make
 ```
 
 #### Run
-After building the container, run the container by using the command:
+This will build all necessary parts and run the application as a Docker container:
 
+```bash
+make run
 ```
-docker run -it --rm sabjorn/cpp-project-template_app
+
+#### Clean
+Remove Docker application image:
+
+```bash
+make clean
+```
+
+### Dev Image
+This project uses the [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build) process (saving image size). This `builder` image can be used as a **development image**. This image contains all the build tools necessary to compile a simple C++ project, including the `GTest` suite.
+
+This will build and run the builder image, entering thorough `bash`:
+
+```bash
+make run_builder
 ```
