@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdexcept>
 /**
     Struct
 */
@@ -59,7 +59,11 @@ struct SimpleStruct {
         See > overload comment for more details
     */
     inline T operator [](const int index) const {
-        if(index == 0)
+        //defining the exception (why don't use "try"?)
+        if (index > 1 || index < 0) { 
+            throw std::out_of_range("Index out of range");
+        }
+        else if(index == 0)
             return a;
         return  b;
     }

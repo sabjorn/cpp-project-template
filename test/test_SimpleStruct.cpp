@@ -1,6 +1,7 @@
 #include "../src/SimpleStruct.h"
 
 #include "gtest/gtest.h"
+#include <stdexcept>
 
 using namespace std;
 
@@ -64,5 +65,33 @@ TEST(SimpleStructTest, arrayOverload){
 
   ASSERT_EQ(s1[0], 0);
   ASSERT_EQ(s1[1], 1);
+}
+
+TEST(SimpleStructTest, arrayOverloadOutOfBounds){
+  SimpleStruct<double> s1 = SimpleStruct<double>(0, 1);
+
+  int index = -1;
+  try{
+    s1[index];
+    FAIL() << "Expected std::out_of_range";
+  }
+  catch(std::out_of_range const & err) {
+    EXPECT_EQ(err.what(), std::string("Index out of range"));
+  }
+  catch(...){
+    FAIL() << "Expected std::out_of_range";
+  }
+
+  index = 2;
+  try{
+    s1[index];
+    FAIL() << "Expected std::out_of_range";
+  }
+  catch(std::out_of_range const & err) {
+    EXPECT_EQ(err.what(), std::string("Index out of range"));
+  }
+  catch(...){
+    FAIL() << "Expected std::out_of_range";
+  }
 }
 
