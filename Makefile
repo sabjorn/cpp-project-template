@@ -35,7 +35,7 @@ build: builder
 	docker build -t $(DOCKER_IMAGE):$(GITSHA) -f Dockerfile .
 
 tests: build
-	@echo "this will run tests eventually"
+	docker run -it --rm --name=$(PROJECT) $(DOCKER_IMAGE):$(GITSHA) tests
 
 run: build
 	docker run -it --rm --name=$(PROJECT) $(DOCKER_IMAGE):$(GITSHA)

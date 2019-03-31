@@ -7,18 +7,20 @@ COPY ./ ./app
 
 # Build Project
 ARG BUILDFLAG="-j4"
-ARG TEST=true
+ARG TEST_ON_BUILD=false
 RUN set -x \
     && mkdir -p /app/build \
     && cd /app/build \
     && cmake .. \
     && make $BUILDFLAG \
-    && if [ "$TEST" = true ]; then make test; fi
-
-# TODO: Run Tests
+    && mkdir -p app_tests \
+    && cp test_* ./app_tests \
+    && if [ "$TEST_ON_BUILD" = true ]; then make test; fi
 
 # Our actual application 
 FROM debian:stretch-slim
 MAINTAINER Steven A. Bjornson <info@sabjorn.net>
 COPY --from=builder /app/build/app /usr/local/bin/
-ENTRYPOINT ["app"]
+COPY --from=builder /app/build/app_tests /usr/local/bin/tests
+COPY ./entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
