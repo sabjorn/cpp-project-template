@@ -1,6 +1,7 @@
 #include <iostream>
-#include "SimpleClass.h"
-#include "SimpleStruct.h"
+
+#include <SimpleLibrary/SimpleClass.h>
+#include <SimpleLibrary/SimpleStruct.h>
 
 using namespace std;
 

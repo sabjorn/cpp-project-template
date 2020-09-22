@@ -1,8 +1,7 @@
-#include "../src/SimpleClass.h"
-
 #include "gtest/gtest.h"
 
-using namespace std;
+#include <SimpleLibrary/SimpleClass.h>
+
 
 class SimpleClassTest
   : public testing::Test
