@@ -1,7 +1,5 @@
 #include "SimpleClass.h"
 
-using namespace std;
-
 SimpleClass::SimpleClass()
 {
     this->bucket = 0; // initialize members
