@@ -1,0 +1,64 @@
+# OSXCross toolchain
+# macro(osxcross_getconf VAR)
+#   if(NOT ${VAR})
+#     set(${VAR} "$ENV{${VAR}}")
+#     if(${VAR})
+#       set(${VAR} "${${VAR}}" CACHE STRING "${VAR}")
+#       message(STATUS "Found ${VAR}: ${${VAR}}")
+#     else()
+#       message(FATAL_ERROR "Cannot determine \"${VAR}\"")
+#     endif()
+#   endif()
+# endmacro()
+
+# osxcross_getconf(OSXCROSS_HOST)
+# osxcross_getconf(OSXCROSS_TARGET_DIR)
+# osxcross_getconf(OSXCROSS_TARGET)
+# osxcross_getconf(OSXCROSS_SDK)
+
+# set(APPLE CACHE STRING "" FORCE)
+set(CMAKE_SYSTEM_NAME "Darwin" CACHE STRING "" FORCE)
+set(OSXCROSS_TARGET_DIR "/opt/osxcross" CACHE STRING "" FORCE)
+set(OSXCROSS_HOST "x86_64-apple-darwin18" CACHE STRING "" FORCE)
+
+# string(REGEX REPLACE "-.*" "" CMAKE_SYSTEM_PROCESSOR "${OSXCROSS_HOST}")
+set(CMAKE_SYSTEM_PROCESSOR "x86_64" CACHE STRING "" FORCE)
+
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "OS X deployment target" FORCE)
+set(OSXCROSS_SDK ${OSXCROSS_TARGET_DIR}/SDK/MacOSX10.14.sdk CACHE STRING "" FORCE)
+set(CMAKE_OSX_SYSROOT ${OSXCROSS_SDK} CACHE STRING "MacOS SDK 10.14" FORCE)
+
+# # where is the target environment
+set(CMAKE_FIND_ROOT_PATH
+  "${OSXCROSS_SDK}"
+  "${OSXCROSS_TARGET_DIR}/macports/pkgs/opt/local" CACHE STRING "" FORCE)
+
+set(CMAKE_C_COMPILER ${OSXCROSS_TARGET_DIR}/bin/${OSXCROSS_HOST}-clang CACHE STRING "" FORCE)
+set(CMAKE_CXX_COMPILER ${OSXCROSS_TARGET_DIR}/bin/${OSXCROSS_HOST}-clang++ CACHE STRING "" FORCE)
+
+set(CMAKE_CXX_FLAGS "-stdlib=libc++ -Werror -Wall -Wextra" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -flto -fstrict-aliasing  -fasm-blocks" CACHE STRING "" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libc++" CACHE STRING "" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-flto -dead_strip" CACHE STRING "" FORCE)
+
+# set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE CACHE BOOL "" FORCE)
+# set(CMAKE_CXX_VISIBILITY_PRESET hidden CACHE STRING "" FORCE)
+# set(CMAKE_POLICY_DEFAULT_CMP0063 NEW CACHE STRING "" FORCE)
+
+set(CMAKE_FIND_ROOT_PATH ${OSXCROSS_TARGET_DIR})
+# search for programs in the build host directories
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# for libraries and headers in the target directories
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+
+set(CMAKE_AR "${OSXCROSS_TARGET_DIR}/bin/${OSXCROSS_HOST}-ar" CACHE FILEPATH "ar")
+set(CMAKE_RANLIB "${OSXCROSS_TARGET_DIR}/bin/${OSXCROSS_HOST}-ranlib" CACHE FILEPATH "ranlib")
+set(CMAKE_INSTALL_NAME_TOOL "${OSXCROSS_TARGET_DIR}/bin/${OSXCROSS_HOST}-install_name_tool" CACHE FILEPATH "install_name_tool")
+
+set(HAVE_STD_REGEX ON CACHE BOOL "" FORCE)
+set(HAVE_GNU_POSIX_REGEX OFF CACHE BOOL "" FORCE)
+set(HAVE_POSIX_REGEX ON CACHE BOOL "" FORCE)
+set(HAVE_STEADY_CLOCK ON CACHE BOOL "" FORCE)
+

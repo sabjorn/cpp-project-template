@@ -38,3 +38,9 @@ This will build and run the builder image, entering thorough `bash`:
 ```bash
 make run_builder
 ```
+
+## Crosscompiling with OSXCross
+run
+```
+cmake -G Ninja -DCMAKE_TOOLCHAIN_FILE=./toolchains/linux-toolchain.cmake ..
+```
