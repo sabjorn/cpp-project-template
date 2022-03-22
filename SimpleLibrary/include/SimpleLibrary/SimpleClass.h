@@ -8,13 +8,12 @@
 */
 class SimpleClass {
 
-private:
-    double bucket; /**< accumulates input */
-
 public:
     SimpleClass();
-    ~SimpleClass();
 
     void addValue(double in);
     double getValue();
+
+private:
+    double bucket_;
 };

@@ -5,12 +5,13 @@
 */
 template <typename T> 
 struct SimpleStruct {
-    T a; /**< First member variable. */
-    T b; /**< First member variable. */
+    T a;
+    T b;
 
-    SimpleStruct(T a, T b) {
-        this->a = a;
-        this->b = b;
+    SimpleStruct(T a, T b)
+    : a(a)
+    , b(b)
+    {
     }
 
     /**
@@ -21,7 +22,7 @@ struct SimpleStruct {
         Made inline for potential compiler efficiency
     */
     inline bool operator >(const SimpleStruct<T> &s) const {
-        if(this->a > s.a && this->b > s.b)
+        if(a > s.a && b > s.b)
             return true;
         return false;
     }
@@ -31,7 +32,7 @@ struct SimpleStruct {
         See > overload comment for more details
     */
     inline bool operator <(const SimpleStruct<T> &s) const {
-        if(this->a < s.a && this->b < s.b)
+        if(a < s.a && b < s.b)
             return true;
         return false;
     }
@@ -41,7 +42,7 @@ struct SimpleStruct {
         See > overload comment for more details
     */
     inline bool operator ==(const SimpleStruct<T> &s) const {
-        if(this->a == s.a && this->b == s.b)
+        if(a == s.a && b == s.b)
             return true;
         return false;
     }
@@ -51,7 +52,7 @@ struct SimpleStruct {
         See > overload comment for more details
     */
     inline SimpleStruct<T> operator -(const SimpleStruct<T> &s) const {
-        return SimpleStruct(this->a - s.a, this->b - s.b);
+        return SimpleStruct(a - s.a, b - s.b);
     }
 
     /**
