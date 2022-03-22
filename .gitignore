@@ -78,5 +78,21 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# clangd
+.clangd/
 
+# CMake
+.cmake
+CMakeCache.txt
+**/CMakeFiles
+**/Makefile
+**/cmake_install.cmake
+build
+cmake_install.cmake
+compile_commands.json
+
+# generated application
+app
+SimpleLibrary/tests/googletest
+**/*TestHost
 # End of https://www.gitignore.io/api/osx,c++,linux

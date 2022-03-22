@@ -1,7 +1,8 @@
-#include "../src/SimpleStruct.h"
-
 #include "gtest/gtest.h"
+
 #include <stdexcept>
+
+#include <SimpleLibrary/SimpleStruct.h>
 
 using namespace std;
 
