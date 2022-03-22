@@ -1,13 +1,7 @@
 #include "SimpleClass.h"
 
-SimpleClass::SimpleClass()
+SimpleClass::SimpleClass() : bucket_(0)
 {
-    this->bucket = 0; // initialize members
-}
-
-SimpleClass::~SimpleClass()
-{
-
 }
 
 /**
@@ -17,15 +11,15 @@ SimpleClass::~SimpleClass()
     \param in - input value to be accumulated
 */
 void SimpleClass::addValue(double in){
-    bucket += in;
+    bucket_ += in;
 }
 
 /**
     getValue
     Returns accumulated value
 
-    \return bucket - accumulated value
+    \return bucket_ - accumulated value
 */
 double SimpleClass::getValue(){
-    return bucket;
+    return bucket_;
 }
