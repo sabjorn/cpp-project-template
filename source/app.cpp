@@ -16,7 +16,7 @@ int main()
     accumulator.addValue(2);
     cout << "accumulator value: " << accumulator.getValue() << endl;
 
-    SimpleStruct<double> s = SimpleStruct<double>(0, 0);
+    auto s = SimpleStruct(0, 0);
     cout << "SimpleStruct values, a: " << s.a << " b: " << s.b << endl;
 
     return 0;
