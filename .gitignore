@@ -90,6 +90,8 @@ CMakeCache.txt
 build
 cmake_install.cmake
 compile_commands.json
+Makefile
+.cache
 
 # generated application
 app
