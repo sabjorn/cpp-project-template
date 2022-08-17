@@ -2,22 +2,24 @@
 
 #include <SimpleLibrary/SimpleClass.h>
 #include <SimpleLibrary/SimpleStruct.h>
+#include <SimpleLibrary/Gain.h>
 
 using namespace std;
-
+//using namespace drtl::amplitude;
 int main()
 {
-    SimpleClass accumulator;
-    cout << "accumulator value: " << accumulator.getValue() << endl;
+    {
+        auto gain = Gain(2.0);
+        auto db = static_cast<Db<double>>(gain);
 
-    accumulator.addValue(1);
-    cout << "accumulator value: " << accumulator.getValue() << endl;
+        cout << "gain : " << gain.getValue() << " db: " << db.getValue() << "\n"; // static_cast<Gain>(amp).getValue() << "\n";
+    }
 
-    accumulator.addValue(2);
-    cout << "accumulator value: " << accumulator.getValue() << endl;
+    {
+        auto db = Db(-6.0);
+        auto gain = static_cast<Gain<double>>(db);
 
-    auto s = SimpleStruct(0, 0);
-    cout << "SimpleStruct values, a: " << s.a << " b: " << s.b << endl;
-
+        cout << "gain : " << gain.getValue() << " db: " << db.getValue() << "\n"; // static_cast<Gain>(amp).getValue() << "\n";
+    }
     return 0;
 }
