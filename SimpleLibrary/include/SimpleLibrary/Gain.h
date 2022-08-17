@@ -32,6 +32,11 @@ class Gain {
         {
             return Gain(gain_ * static_cast<T>(static_cast<Gain<T>>(db)));
         };
+        
+        Gain<T> operator*(Gain<T> gain)
+        {
+            return Gain(gain_ * static_cast<T>(gain));
+        };
 
     private:
         T gain_;
@@ -54,9 +59,14 @@ class Db {
             return std::pow(static_cast<T>(10), db_ / static_cast<T>(20));
         };
 
+        Db<T> operator*(Db<T> db)
+        {
+           return Db(db_ + static_cast<T>(db));
+        };
+
         Db<T> operator*(Gain<T> gain)
         {
-           return T(db_ + static_cast<T>(static_cast<Db<T>>(gain)));
+           return Db(db_ + static_cast<T>(static_cast<Db<T>>(gain)));
         };
 
     private:
