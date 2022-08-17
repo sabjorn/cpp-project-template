@@ -14,11 +14,11 @@ class Gain {
     public:
         Gain(T gain) : gain_(gain) {};
         T getValue() { return gain_; };
-
+        
         operator T() const 
         {
             return static_cast<T>(gain_);
-        }
+        };
 
         operator Db<T>() const 
         { 
@@ -26,6 +26,11 @@ class Gain {
                 return Db(static_cast<T>(-150)); 
 
             return Db(static_cast<T>(20) * std::log10(gain_)); 
+        };
+       
+        Gain<T> operator*(Db<T> db)
+        {
+            return Gain(gain_ * static_cast<T>(static_cast<Gain<T>>(db)));
         };
 
     private:
@@ -47,6 +52,11 @@ class Db {
         operator Gain<T>() const 
         { 
             return std::pow(static_cast<T>(10), db_ / static_cast<T>(20));
+        };
+
+        Db<T> operator*(Gain<T> gain)
+        {
+           return T(db_ + static_cast<T>(static_cast<Db<T>>(gain)));
         };
 
     private:
